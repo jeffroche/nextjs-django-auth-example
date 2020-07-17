@@ -1,0 +1,21 @@
+[
+  {
+    "fields": {
+      "username": "jeff",
+      "first_name": "",
+      "last_name": "",
+      "name": "Jeff Roche",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2020-01-01T05:00:00.000Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$180000$q5vJc2e0GlkS$jxoxy0+OrHcYvJzH2OVM3A0hpSoN1UPzad7OU1IZBEE=",
+      "email": "jeff.roche@gmail.com",
+      "date_joined": "2020-01-01T01:00:00.000Z"
+    },
+    "model": "api.user",
+    "pk": 1
+  }
+]
