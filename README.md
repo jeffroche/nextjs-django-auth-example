@@ -17,6 +17,8 @@ Frontend:
 
 ## Getting up and running
 
+### Backend
+
 Create a virtualenv:
 
 ```
@@ -36,6 +38,10 @@ Set up DB (sqlite):
 $ python manage.py makemigrations api
 $ python manage.py migrate
 ```
+
+### Frontend
+
+See `../README.md`
 
 ## Running locally
 
