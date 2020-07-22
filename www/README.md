@@ -2,9 +2,12 @@
 
 Install dependencies:
 
+
 ```
 $ npm install
 ```
+
+Then, copy `.env.sample` to `.env` and update accordingly.
 
 Running locally:
 
