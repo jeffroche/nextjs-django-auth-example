@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import (
-    TokenObtainPairSerializer as TokenObtainPairSerializerBase,
-)
+from rest_framework_simplejwt import serializers as jwt_serializers
 
 from . import models
 
@@ -20,7 +18,7 @@ class User(serializers.ModelSerializer):
         )
 
 
-class TokenObtainPairSerializer(TokenObtainPairSerializerBase):
+class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -29,3 +27,7 @@ class TokenObtainPairSerializer(TokenObtainPairSerializerBase):
         token["name"] = user.name
 
         return token
+
+
+class TokenRefreshSerializer(jwt_serializers.TokenRefreshSerializer):
+    pass
