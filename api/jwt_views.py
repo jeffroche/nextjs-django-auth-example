@@ -2,6 +2,7 @@ import datetime as dt
 from django.conf import settings
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenViewBase
 from rest_framework_simplejwt.settings import api_settings as jwt_settings
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
@@ -47,3 +48,12 @@ class Login(TokenViewBaseWithCookie):
 
 class RefreshToken(TokenViewBaseWithCookie):
     serializer_class = serializers.TokenRefreshSerializer
+
+
+class Logout(APIView):
+
+    def post(self, *args, **kwargs):
+        resp = Response({})
+        cookie_name = getattr(settings, 'JWT_COOKIE_NAME', "refresh_token")
+        resp.delete_cookie(cookie_name)
+        return resp
