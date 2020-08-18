@@ -16,6 +16,7 @@ urlpatterns = [
         name="token-refresh"
     ),
     path("token/logout/", jwt_views.Logout.as_view(), name="logout"),
+    path("ping/", views.Ping.as_view(), name="ping"),
     path("admin/", admin.site.urls),
 ]
 

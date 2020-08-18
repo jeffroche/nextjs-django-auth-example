@@ -6,8 +6,7 @@ const Me: React.SFC = (): React.ReactElement => {
   if (loading) {
     return (
       <Layout>
-        <h1 className="text-xl pt-3 pb-5">Welcome!</h1>
-        <p>Sucessfully logged in!</p>
+        <p>Loading...</p>
       </Layout>
     );
   } else {

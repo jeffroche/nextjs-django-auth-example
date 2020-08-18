@@ -55,11 +55,11 @@ class TokenRefreshSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         token = self.get_token_from_cookie()
-        refresh = RefreshToken(token)
-        if refresh is None:
+        if token is None:
             raise serializers.ValidationError(
                 "No refresh token cookie found"
             )
+        refresh = RefreshToken(token)
 
         data = {
             "access": str(refresh.access_token),

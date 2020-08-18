@@ -25,6 +25,7 @@ DEBUG = env("DEBUG")
 ON_SERVER = env("ON_SERVER", default=True)
 
 ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_CREDENTIALS = True
 if ON_SERVER:
     CORS_ORIGIN_REGEX_WHITELIST = [
     ]
@@ -46,6 +47,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "django_extensions",
     "rest_framework",
+    'rest_framework_simplejwt.token_blacklist'
 ]
 OUR_APPS = [
     "api",
@@ -174,12 +176,11 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
     )
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
 }
 
