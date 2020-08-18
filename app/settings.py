@@ -27,8 +27,9 @@ ON_SERVER = env("ON_SERVER", default=True)
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_CREDENTIALS = True
 if ON_SERVER:
-    CORS_ORIGIN_REGEX_WHITELIST = [
-    ]
+    CORS_ORIGIN_REGEX_WHITELIST = env.list(
+        "CORS_ORIGIN_REGEX_WHITELIST", default=[]
+    )
 else:
     CORS_ORIGIN_ALLOW_ALL = True
 
