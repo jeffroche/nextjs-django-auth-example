@@ -27,6 +27,7 @@ class TokenViewBaseWithCookie(TokenViewBase):
         cookie_name = getattr(settings, 'JWT_COOKIE_NAME', "refresh_token")
         cookie_secure = getattr(settings, 'JWT_COOKIE_SECURE', False)
         cookie_samesite = getattr(settings, 'JWT_COOKIE_SAMESITE', "Lax")
+
         # TODO: this should probably be pulled from the token exp
         expiration = (
             dt.datetime.utcnow() + jwt_settings.REFRESH_TOKEN_LIFETIME

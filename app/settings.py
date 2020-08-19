@@ -180,10 +180,14 @@ REST_FRAMEWORK = {
     )
 }
 
+# JWT Settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
 }
+JWT_COOKIE_NAME = env("JWT_COOKIE_NAME", default=None)
+JWT_COOKIE_SECURE = env("JWT_COOKIE_SECURE", default=None)
+JWT_COOKIE_SAMESITE = env("JWT_COOKIE_SAMESITE", default=None)
 
 if ON_SERVER:
     # HTTPS
