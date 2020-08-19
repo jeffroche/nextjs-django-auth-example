@@ -50,8 +50,7 @@ class TokenRefreshSerializer(serializers.Serializer):
 
     def get_token_from_cookie(self):
         request = self.context["request"]
-        cookie_name = getattr(settings, 'JWT_COOKIE_NAME', "refresh_token")
-        return request.COOKIES.get(cookie_name)
+        return request.COOKIES.get(settings.JWT_COOKIE_NAME)
 
     def validate(self, attrs):
         token = self.get_token_from_cookie()

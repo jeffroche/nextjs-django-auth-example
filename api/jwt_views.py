@@ -24,9 +24,6 @@ class TokenViewBaseWithCookie(TokenViewBase):
             raise InvalidToken(e.args[0])
 
         resp = Response(serializer.validated_data, status=status.HTTP_200_OK)
-        cookie_name = getattr(settings, 'JWT_COOKIE_NAME', "refresh_token")
-        cookie_secure = getattr(settings, 'JWT_COOKIE_SECURE', False)
-        cookie_samesite = getattr(settings, 'JWT_COOKIE_SAMESITE', "Lax")
 
         # TODO: this should probably be pulled from the token exp
         expiration = (
@@ -34,12 +31,12 @@ class TokenViewBaseWithCookie(TokenViewBase):
         )
 
         resp.set_cookie(
-            cookie_name,
+            settings.JWT_COOKIE_NAME,
             serializer.validated_data["refresh"],
             expires=expiration,
-            secure=cookie_secure,
+            secure=settings.JWT_COOKIE_SECURE,
             httponly=True,
-            samesite=cookie_samesite
+            samesite=settings.JWT_COOKIE_SAMESITE
         )
 
         return resp
@@ -57,13 +54,8 @@ class Logout(APIView):
 
     def post(self, *args, **kwargs):
         resp = Response({})
-        token = self.get_token_from_cookie()
+        token = self.request.COOKIES.get(settings.JWT_COOKIE_NAME)
         refresh = RefreshTokenModel(token)
         refresh.blacklist()
-        cookie_name = getattr(settings, 'JWT_COOKIE_NAME', "refresh_token")
-        resp.delete_cookie(cookie_name)
+        resp.delete_cookie(settings.JWT_COOKIE_NAME)
         return resp
-
-    def get_token_from_cookie(self):
-        cookie_name = getattr(settings, 'JWT_COOKIE_NAME', "refresh_token")
-        return self.request.COOKIES.get(cookie_name)

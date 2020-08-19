@@ -185,9 +185,9 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
 }
-JWT_COOKIE_NAME = env("JWT_COOKIE_NAME", default=None)
-JWT_COOKIE_SECURE = env("JWT_COOKIE_SECURE", default=None)
-JWT_COOKIE_SAMESITE = env("JWT_COOKIE_SAMESITE", default=None)
+JWT_COOKIE_NAME = env.str("JWT_COOKIE_NAME", default="refresh_token")
+JWT_COOKIE_SECURE = env.bool("JWT_COOKIE_SECURE", default=False)
+JWT_COOKIE_SAMESITE = env.str("JWT_COOKIE_SAMESITE", default="Lax")
 
 if ON_SERVER:
     # HTTPS
