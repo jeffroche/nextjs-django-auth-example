@@ -29,9 +29,6 @@ class TokenViewBaseWithCookie(TokenViewBase):
         expiration = (
             dt.datetime.utcnow() + jwt_settings.REFRESH_TOKEN_LIFETIME
         )
-        samesite = settings.JWT_COOKIE_SAMESITE
-        if samesite in ("None", ""):
-            samesite = None
 
         resp.set_cookie(
             settings.JWT_COOKIE_NAME,
