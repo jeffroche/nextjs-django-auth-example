@@ -15,40 +15,60 @@ Frontend:
 - Next.js
 - Tailwind
 
-## Getting up and running
+## Setting up the backend API
 
-### Backend
-
-Create a virtualenv:
+Create and activate a virtualenv:
 
 ```
 $ python3 -m venv .venv
 $ source .venv/bin/activate
 ```
 
-Install requirements:
+Install Python requirements:
 
 ```
 $ pip install -r requirements/base.txt
 ```
 
-Set up DB (sqlite):
+Configure the Django environment:
+
+- Rename the sample environment file to `.env`:
+    ```
+    $ mv .env.sample .env
+    ```
+- Edit the `.env` file and provide a value for `SECRET_KEY`
+
+Set up the DB (uses sqlite by default):
 
 ```
 $ python manage.py makemigrations api
 $ python manage.py migrate
 ```
 
-### Frontend
-
-See `../README.md`
-
-## Running locally
+### Running the API locally
 
 ```
-$ source .venv/bin/activate
 $ python manage.py runserver 4001
 ```
+
+The API is now running at http://localhost:4001
+
+## Setting up the frontend UI
+
+In a new shell instance, switch to the `www` folder and install JavaScript dependencies:
+
+```
+$ cd www
+$ npm install
+```
+
+### Running the UI locally
+
+```
+$ npm run dev
+```
+
+The UI is now running. Visit http://localhost:4000 in your browser.
 
 ## Running tests
 
