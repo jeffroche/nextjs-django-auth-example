@@ -1,4 +1,5 @@
 from datetime import timedelta
+import django_heroku
 import os
 import environ
 
@@ -24,7 +25,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ON_SERVER = env("ON_SERVER", default=True)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["coffee-poo-app.herokuapp.com"]
 CORS_ALLOW_CREDENTIALS = True
 if ON_SERVER:
     CORS_ORIGIN_REGEX_WHITELIST = env.list(
@@ -98,7 +99,14 @@ WSGI_APPLICATION = "app.wsgi.application"
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db(),
+    'default': {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "db",
+        "USER": "mpkksljslzbqfa",
+        "PASSWORD": "e2d1beb69157782d5b8443fb1066cb73da16b07bdc98ac2324c032accc442aa2",
+        "HOST": "ec2-34-197-91-131.compute-1.amazonaws.com",
+        "PORT": "5432"
+    }
 }
 
 # Password validation
@@ -132,6 +140,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
+django_heroku.settings(locals())
 
 if ON_SERVER:
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
