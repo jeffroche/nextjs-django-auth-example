@@ -17,4 +17,4 @@ class Ping(generics.GenericAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, *args, **kwargs):
-        return response.Response({'now': timezone.now().isoformat()})
+        return response.Response({'now': timezone.now()})

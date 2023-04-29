@@ -1,6 +1,6 @@
 .venv
 .env
 *.db
-
+__pycache__/
 www/node_modules
 www/.next

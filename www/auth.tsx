@@ -20,6 +20,7 @@ const makeUrl = (endpoint: string): string => {
 
 const fetchToken = (username: string, password: string): Promise<Response> => {
   const url = makeUrl("/token/");
+  console.log('url', url)
   return fetch(url, {
     method: "POST",
     body: JSON.stringify({ username, password }),
@@ -135,6 +136,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): React.ReactNode =
   }
 
   const login = async (username: string, password: string): Promise<Response> => {
+    console.log('username', username)
+    console.log('password', password)
     const resp = await fetchToken(username, password);
     if (resp.ok) {
       const tokenData = await resp.json();
