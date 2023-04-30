@@ -26,11 +26,13 @@ DEBUG = env("DEBUG")
 ON_SERVER = env("ON_SERVER", default=True)
 
 ALLOWED_HOSTS = ["0.0.0.0", "coffee-poo-app.herokuapp.com", "127.0.0.1", "localhost"]
+
 CORS_ALLOW_CREDENTIALS = True
 if ON_SERVER:
-    CORS_ORIGIN_REGEX_WHITELIST = env.list(
-        "CORS_ORIGIN_REGEX_WHITELIST", default=[]
-    )
+    # CORS_ORIGIN_REGEX_WHITELIST = env.list(
+    #     "CORS_ORIGIN_REGEX_WHITELIST", default=["localhost:4000", "127.0.0.1:4000"]
+    # )
+    CORS_ORIGIN_ALLOW_ALL = True
 else:
     CORS_ORIGIN_ALLOW_ALL = True
 
