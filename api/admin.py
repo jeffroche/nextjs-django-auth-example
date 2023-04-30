@@ -10,3 +10,20 @@ User = get_user_model()
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
     pass
+
+
+@admin.register(models.Coffee)
+class CoffeeAdmin(admin.ModelAdmin):
+    list_display = ("name", "brand")
+
+@admin.register(models.Review)
+class ReviewAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(models.Preparation)
+class PreparationAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(models.Brand)
+class BrandAdmin(admin.ModelAdmin):
+    pass
