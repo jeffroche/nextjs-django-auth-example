@@ -6,28 +6,25 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenViewBase
 from rest_framework_simplejwt.settings import api_settings as jwt_settings
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-from rest_framework_simplejwt.tokens import (
-    RefreshToken as RefreshTokenModel
-)
+from rest_framework_simplejwt.tokens import RefreshToken as RefreshTokenModel
 
 from . import serializers
 
 
 class TokenViewBaseWithCookie(TokenViewBase):
-
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
 
         try:
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
-            raise InvalidToken(e.args[0])
+            raise InvalidToken(e.args[0]) from e
 
         resp = Response(serializer.validated_data, status=status.HTTP_200_OK)
 
         # TODO: this should probably be pulled from the token exp
         expiration = (
-            dt.datetime.utcnow() + jwt_settings.REFRESH_TOKEN_LIFETIME
+            dt.datetime.now(dt.timezone.utc) + jwt_settings.REFRESH_TOKEN_LIFETIME
         )
 
         resp.set_cookie(
@@ -36,7 +33,7 @@ class TokenViewBaseWithCookie(TokenViewBase):
             expires=expiration,
             secure=settings.JWT_COOKIE_SECURE,
             httponly=True,
-            samesite=settings.JWT_COOKIE_SAMESITE
+            samesite=settings.JWT_COOKIE_SAMESITE,
         )
 
         return resp
@@ -51,7 +48,6 @@ class RefreshToken(TokenViewBaseWithCookie):
 
 
 class Logout(APIView):
-
     def post(self, *args, **kwargs):
         resp = Response({})
         token = self.request.COOKIES.get(settings.JWT_COOKIE_NAME)

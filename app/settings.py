@@ -51,7 +51,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "django_extensions",
     "rest_framework",
-    'rest_framework_simplejwt.token_blacklist'
+    "rest_framework_simplejwt.token_blacklist",
 ]
 OUR_APPS = [
     "api",
@@ -73,7 +73,7 @@ if not ON_SERVER:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(9, "debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = [
-        '127.0.0.1',
+        "127.0.0.1",
     ]
 
 ROOT_URLCONF = "api.urls"
@@ -101,13 +101,13 @@ WSGI_APPLICATION = "app.wsgi.application"
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "db",
         "USER": "mpkksljslzbqfa",
         "PASSWORD": "e2d1beb69157782d5b8443fb1066cb73da16b07bdc98ac2324c032accc442aa2",
         "HOST": "ec2-34-197-91-131.compute-1.amazonaws.com",
-        "PORT": "5432"
+        "PORT": "5432",
     }
 }
 
@@ -143,7 +143,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 django_heroku.settings(locals())
-del DATABASES['default']['OPTIONS']['sslmode']
+del DATABASES["default"]["OPTIONS"]["sslmode"]
 
 if ON_SERVER:
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -151,8 +151,7 @@ if ON_SERVER:
     MIDDLEWARE = tuple(
         ["whitenoise.middleware.WhiteNoiseMiddleware"] + list(MIDDLEWARE)
     )
-    STATICFILES_STORAGE = \
-        "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 LOGGING = {
@@ -170,7 +169,10 @@ LOGGING = {
         "simple": {"format": "%(levelname)s %(message)s"},
     },
     "handlers": {
-        "null": {"level": "DEBUG", "class": "logging.NullHandler", },
+        "null": {
+            "level": "DEBUG",
+            "class": "logging.NullHandler",
+        },
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
@@ -194,7 +196,7 @@ REST_FRAMEWORK = {
 
 # JWT Settings
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
 }
 JWT_COOKIE_NAME = env.str("JWT_COOKIE_NAME", default="refresh_token")
@@ -203,5 +205,5 @@ JWT_COOKIE_SAMESITE = env.str("JWT_COOKIE_SAMESITE", default="Lax")
 
 if ON_SERVER:
     # HTTPS
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True

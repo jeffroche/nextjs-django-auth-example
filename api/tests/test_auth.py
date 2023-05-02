@@ -17,7 +17,5 @@ class TestToken(TestCase):
         self.assertIn("refresh", resp.data)
 
     def test_token_error(self):
-        resp = self.client.post(
-            "/token/", {"username": "jeff", "password": "foo"}
-        )
+        resp = self.client.post("/token/", {"username": "jeff", "password": "foo"})
         self.assertEqual(resp.status_code, 401)

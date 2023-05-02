@@ -36,10 +36,10 @@ class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
 
         refresh = self.get_token(self.user)
 
-        data['refresh'] = str(refresh)
-        data['refresh_expires'] = refresh["exp"]
-        data['access'] = str(refresh.access_token)
-        data['access_expires'] = refresh.access_token["exp"]
+        data["refresh"] = str(refresh)
+        data["refresh_expires"] = refresh["exp"]
+        data["access"] = str(refresh.access_token)
+        data["access_expires"] = refresh.access_token["exp"]
 
         return data
 
@@ -55,14 +55,12 @@ class TokenRefreshSerializer(serializers.Serializer):
     def validate(self, attrs):
         token = self.get_token_from_cookie()
         if token is None:
-            raise serializers.ValidationError(
-                "No refresh token cookie found"
-            )
+            raise serializers.ValidationError("No refresh token cookie found")
         refresh = RefreshToken(token)
 
         data = {
             "access": str(refresh.access_token),
-            "access_expires": refresh.access_token["exp"]
+            "access_expires": refresh.access_token["exp"],
         }
 
         if jwt_settings.BLACKLIST_AFTER_ROTATION:
@@ -77,7 +75,7 @@ class TokenRefreshSerializer(serializers.Serializer):
         refresh.set_jti()
         refresh.set_exp()
 
-        data['refresh'] = str(refresh)
-        data['refresh_expires'] = refresh["exp"]
+        data["refresh"] = str(refresh)
+        data["refresh_expires"] = refresh["exp"]
 
         return data
