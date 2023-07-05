@@ -4,21 +4,7 @@ from rest_framework_simplejwt import serializers as jwt_serializers
 from rest_framework_simplejwt.settings import api_settings as jwt_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from . import models
-
-
-class User(serializers.ModelSerializer):
-    class Meta:
-        model = models.User
-        fields = (
-            "id",
-            "username",
-            "name",
-            "email",
-            "is_active",
-            "date_joined",
-            "last_login",
-        )
+from api.models import User
 
 
 class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
@@ -27,7 +13,7 @@ class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
         token = super().get_token(user)
 
         # Custom claims
-        token["name"] = user.name
+        token["email"] = user.email
 
         return token
 
@@ -42,6 +28,20 @@ class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
         data["access_expires"] = refresh.access_token["exp"]
 
         return data
+
+
+class UserRegisterationSerializer(serializers.ModelSerializer):
+    """
+    Serializer class to serialize registration requests and create a new user.
+    """
+
+    class Meta:
+        model = User
+        fields = ("id", "email", "password", "first_name", "last_name")
+        # extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
 
 
 class TokenRefreshSerializer(serializers.Serializer):

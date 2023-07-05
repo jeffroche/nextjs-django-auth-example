@@ -1,49 +1,79 @@
+'use client';
+
 import { useState } from 'react';
 import { useAuth } from '../auth';
 import Link from 'next/dist/client/link';
+import { LogoutIcon, LoginIcon } from '@heroicons/react/outline';
 
 const Layout = ({ children }): React.ReactElement => {
 	const { isAuthenticated } = useAuth();
 	const [sidebarOpen, setSidebarOpen] = useState(true);
 	return (
-		<div className="flex overflow-x-hidden h-screen sticky top-0 z-10 bg-green-500 shadow-md ">
+		<div className="flex ">
 			{sidebarOpen && (
-				<aside
-					className={`flex-shrink-0 w-64 flex flex-col border-r transition-all duration-300 ${
-						sidebarOpen ? 'w-64' : 'w-0'
-					}`}
-				>
-					{/* <div className="h-64 bg-gray-900"></div> */}
-					<nav className="flex-1 flex flex-col bg-gray-900">
+				<div className="h-screen px-3 pb-4 relative space-y-4 text-zinc-900 dark:text-zinc-500 p-5 text-xs md:text-sm  border-zinc-600 w-64 border-2">
+					<nav className="space-y-1">
 						{isAuthenticated ? (
-							<Link href="/me">
-								<a className="text-teal-200 hover:text-white mr-4">Profile</a>
-							</Link>
+							<>
+								<Link
+									href="/me"
+									className="flex items-center p-2  font-normal text-zinc-900 rounded-lg dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-green-500 dark:hover:text-white transition duration-200"
+								>
+									Profile
+								</Link>
+								<Link
+									href="/coffee"
+									className="flex items-center p-2  font-normal text-zinc-900 rounded-lg dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-green-500 dark:hover:text-white transition duration-200"
+								>
+									Coffee
+								</Link>
+								<Link
+									href="/brands"
+									className="flex items-center p-2  font-normal text-zinc-900 rounded-lg dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-green-500 dark:hover:text-white transition duration-200"
+								>
+									Brands
+								</Link>
+							</>
 						) : null}
-						<Link href="/ping">
-							<a className="text-teal-200 hover:text-white mr-4">Ping</a>
+						<Link
+							href="/ping"
+							className="flex items-center p-2  font-normal text-zinc-900 rounded-lg dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-green-500 dark:hover:text-white transition duration-200"
+						>
+							Ping
 						</Link>
-						<Link href="/about">
-							<a className="text-teal-200 hover:text-white">About</a>
+						<Link
+							href="/about"
+							className="flex items-center p-2  font-normal text-zinc-900 rounded-lg dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-green-500 dark:hover:text-white transition duration-200"
+						>
+							About
 						</Link>
+						<hr className="border-t[0.1px] border-zinc-900 dark:border-zinc-400" />
 						{isAuthenticated ? (
-							<Link href="/logout">
-								<a className="inline-block text-sm md:text-lg px-4 py-2 leading-none rounded text-gray-200 hover:border-gray-200 hover:bg-gray-800 mt-4 lg:mt-0">
-									Logout
-								</a>
+							<Link
+								href="/logout"
+								className="flex items-center p-2  font-normal text-zinc-900 rounded-lg dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-green-500 dark:hover:text-white transition duration-200"
+							>
+								<>
+									<LogoutIcon className="w-6 h-6" />
+									<span className="ml-3">Logout</span>
+								</>
 							</Link>
 						) : (
-							<Link href="/login">
-								<a className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
-									Login
-								</a>
+							<Link
+								href="/login"
+								className="flex items-center p-2  font-normal text-zinc-900 rounded-lg dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-green-500 dark:hover:text-white transition duration-200"
+							>
+								<>
+									<LoginIcon className="w-6 h-6" />
+									<span className="ml-3">Login</span>
+								</>
 							</Link>
 						)}
 					</nav>
-				</aside>
+				</div>
 			)}
 			<div className="flex-1">
-				<header className="flex items-center p-4 text-semibold text-gray-100 bg-gray-900">
+				<header className="flex items-center p-4 text-semibold text-gray-100 bg-gray-900 sticky top-0 z-10">
 					<button className="p-1 mr-4" onClick={() => setSidebarOpen(!sidebarOpen)}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -61,18 +91,20 @@ const Layout = ({ children }): React.ReactElement => {
 						</svg>
 					</button>
 					<Link href="/">
-						<a>
-							<div className="flex items-center flex-shrink-0 text-gray-200 mr-6">
-								<span className="font-semibold text-6xl tracking-tight ">
-									Do Do Brew
-								</span>
-							</div>
-						</a>
+						<div className="flex items-center space-x-2 flex-shrink-0 text-gray-200 mr-6">
+							<img
+								src="Coffee-Cup-Silhouette.svg"
+								alt="Coffee Cup"
+								className="h-20 w-20 rounded-full bg-gradient-to-tr from-stone-500 to-gray-300"
+							/>
+							<span className="flex items-center font-semibold text-6xl ">
+								Do Do Brew
+							</span>
+						</div>
 					</Link>
 				</header>
-				<main className="h-screen bg-gray-800 h-scroll overflow-y-auto p-4">
-					{children}
-				</main>
+
+				<div className="flex-grow w-full p-4">{children}</div>
 			</div>
 		</div>
 	);

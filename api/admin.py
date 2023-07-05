@@ -9,7 +9,7 @@ User = get_user_model()
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
-    pass
+    ordering = ("email",)
 
 
 @admin.register(models.Coffee)
