@@ -3,15 +3,14 @@ from django.contrib import admin
 from django.urls import include, path
 
 from rest_framework import routers
-
-from api.views import brands, ping, profile, coffees
+from api.views.races import RaceViewSet
+from api.views import ping, profile
 from . import jwt_views
 
 admin.autodiscover()
 
 router = routers.DefaultRouter()
-router.register(r"brand", brands.BrandViewSet, basename="brand")
-router.register(r"coffee", coffees.CoffeeViewSet, basename="coffee")
+router.register(r"races", RaceViewSet, basename="races")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,7 +25,7 @@ urlpatterns = [
 
 urlpatterns += [path("api-auth/", include("rest_framework.urls"))]
 
-if not settings.ON_SERVER:
+if settings.DEBUG_TOOLBAR:
     import debug_toolbar
 
     urlpatterns = [

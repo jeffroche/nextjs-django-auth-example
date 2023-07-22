@@ -12,21 +12,16 @@ class UserAdmin(auth_admin.UserAdmin):
     ordering = ("email",)
 
 
-@admin.register(models.Coffee)
-class CoffeeAdmin(admin.ModelAdmin):
-    list_display = ("name", "brand")
-
-
-@admin.register(models.Review)
-class ReviewAdmin(admin.ModelAdmin):
+@admin.register(models.TrainingGroup)
+class TrainingGroupAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.Preparation)
-class PreparationAdmin(admin.ModelAdmin):
+@admin.register(models.Race)
+class RaceAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.Brand)
-class BrandAdmin(admin.ModelAdmin):
+@admin.register(models.City)
+class CityAdmin(admin.ModelAdmin):
     pass

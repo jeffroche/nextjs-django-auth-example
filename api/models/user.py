@@ -11,7 +11,7 @@ class CustomUserManager(BaseUserManager):
     for authentication instead of usernames.
     """
 
-    def create_user(self, email, password, **kwargs):
+    def _create_user(self, email, password, **kwargs):
         if not email:
             raise ValueError(_("Users must have an email address"))
         email = self.normalize_email(email)
@@ -36,6 +36,13 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
+    home_city = models.ForeignKey(
+        "City",
+        related_name="city_runners",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

@@ -2,13 +2,17 @@ from datetime import timedelta
 import django_heroku
 import os
 import environ
+import dj_database_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env(
-    ON_SERVER=(bool, True), LOGGING_LEVEL=(str, "INFO"), DEBUG=(bool, True)
+    ON_SERVER=(bool, True),
+    LOGGING_LEVEL=(str, "INFO"),
+    DEBUG=(bool, True),
+    DEBUG_TOOLBAR=(bool, False),
 )
 IGNORE_DOT_ENV_FILE = env.bool("IGNORE_DOT_ENV_FILE", default=False)
 if not IGNORE_DOT_ENV_FILE:
@@ -23,6 +27,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
+DEBUG_TOOLBAR = env("DEBUG_TOOLBAR")
 ON_SERVER = env("ON_SERVER", default=True)
 
 ALLOWED_HOSTS = ["0.0.0.0", "coffee-poo-app.herokuapp.com", "127.0.0.1", "localhost"]
@@ -69,7 +74,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-if not ON_SERVER:
+if DEBUG_TOOLBAR:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(9, "debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = [
@@ -102,14 +107,24 @@ WSGI_APPLICATION = "app.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "db",
-        "USER": "mpkksljslzbqfa",
-        "PASSWORD": "e2d1beb69157782d5b8443fb1066cb73da16b07bdc98ac2324c032accc442aa2",
-        "HOST": "ec2-34-197-91-131.compute-1.amazonaws.com",
-        "PORT": "5432",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES["default"].update(db_from_env)
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": "db",
+#         "USER": "mpkksljslzbqfa",
+#         "PASSWORD": "e2d1beb69157782d5b8443fb1066cb73da16b07bdc98ac2324c032accc442aa2",
+#         "HOST": "ec2-34-197-91-131.compute-1.amazonaws.com",
+#         "PORT": "5432",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -143,7 +158,8 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 django_heroku.settings(locals())
-del DATABASES["default"]["OPTIONS"]["sslmode"]
+if ON_SERVER:
+    del DATABASES["default"]["OPTIONS"]["sslmode"]
 
 if ON_SERVER:
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
