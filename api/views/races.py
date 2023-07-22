@@ -22,12 +22,12 @@ class RaceViewSet(viewsets.ModelViewSet):
         return qs
 
     def list(self, request, *args, **kwargs):
-        coffees = self.get_queryset()
-        results = self.paginate_queryset(coffees)
+        races = self.get_queryset()
+        results = self.paginate_queryset(races)
         serializer = self.get_serializer(results, many=True)
         return self.get_paginated_response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        coffee = self.get_object()
-        serializer = self.get_serializer(coffee)
+        race = self.get_object()
+        serializer = self.get_serializer(race)
         return Response(serializer.data)
