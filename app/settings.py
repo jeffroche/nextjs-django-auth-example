@@ -30,7 +30,7 @@ DEBUG = env("DEBUG")
 DEBUG_TOOLBAR = env("DEBUG_TOOLBAR")
 ON_SERVER = env("ON_SERVER", default=True)
 
-ALLOWED_HOSTS = ["0.0.0.0", "coffee-poo-app.herokuapp.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["0.0.0.0", "run-pacer.herokuapp.com", "127.0.0.1", "localhost"]
 
 CORS_ALLOW_CREDENTIALS = True
 if ON_SERVER:
