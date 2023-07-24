@@ -18,7 +18,6 @@ class RaceViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         qs = Race.objects.all()
-        qs = qs.annotate_is_favorite(self.request.user)
         return qs
 
     def list(self, request, *args, **kwargs):
