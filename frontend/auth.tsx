@@ -20,7 +20,20 @@ export const makeUrl = (endpoint: string): string => {
 
 const fetchToken = (email: string, password: string): Promise<Response> => {
 	const url = makeUrl('/login/');
-	console.log('url', url);
+	return fetch(url, {
+		method: 'POST',
+		body: JSON.stringify({ email, password }),
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		credentials: 'include'
+	});
+};
+const newRegistrationToken = (
+	email: string,
+	password: string
+): Promise<Response> => {
+	const url = makeUrl('/register/');
 	return fetch(url, {
 		method: 'POST',
 		body: JSON.stringify({ email, password }),
@@ -59,6 +72,8 @@ type AuthContextProps = {
 	login: (email: string, password: string) => Promise<Response>;
 	logout: () => void;
 	getToken: () => Promise<string>;
+	sidebarOpen: boolean;
+	setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AuthContext = React.createContext<Partial<AuthContextProps>>({});
@@ -71,6 +86,7 @@ export const AuthProvider = ({
 	children
 }: AuthProviderProps): React.ReactNode => {
 	const [loading, setLoading] = useState(true);
+	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [user, setUser] = useState<User | null>(null);
 	const [accessToken, setAccessToken] = useState<string>('');
@@ -89,14 +105,12 @@ export const AuthProvider = ({
 			return false;
 		}
 		const expiry = new Date(accessTokenExpiry);
-		console.log('Checking token expiry:', expiry);
 		return expiry.getTime() > Date.now();
 	};
 
 	const initAuth = async (): Promise<void> => {
 		setLoading(true);
 		if (!accessTokenIsValid()) {
-			console.log('Invalid access token so refetching');
 			await refreshToken();
 		} else {
 			setIsAuthenticated(true);
@@ -124,7 +138,6 @@ export const AuthProvider = ({
 		const tokenData = await resp.json();
 		handleNewToken(tokenData);
 		if (user === null) {
-			console.log('No user loaded so loading from refreshed token');
 			await initUser(tokenData.access);
 		}
 		return tokenData.access;
@@ -152,9 +165,26 @@ export const AuthProvider = ({
 		return resp;
 	};
 
+	const register = async (
+		email: string,
+		password: string
+	): Promise<Response> => {
+		const resp = await newRegistrationToken(email, password);
+		if (resp.ok) {
+			const tokenData = await resp.json();
+			console.log('tokenData from register', tokenData);
+			handleNewToken(tokenData);
+			await initUser(tokenData.access);
+		} else {
+			setIsAuthenticated(false);
+			setLoading(true);
+			// Let the page handle the error
+		}
+		return resp;
+	};
+
 	const getToken = async (): Promise<string> => {
 		// Returns an access token if there's one or refetches a new one
-		console.log('Getting access token..');
 		if (accessTokenIsValid()) {
 			console.log('Getting access token.. existing token still valid');
 			return Promise.resolve(accessToken);
@@ -184,13 +214,16 @@ export const AuthProvider = ({
 	};
 
 	const value = {
+		accessToken,
+		getToken,
 		isAuthenticated,
-		user,
 		loading,
 		login,
 		logout,
-		accessToken,
-		getToken
+		sidebarOpen,
+		setSidebarOpen,
+		register,
+		user
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

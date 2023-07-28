@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 const BrandDetails = () => {
 	const router = useRouter();
-	const brandId = router.query.brandId;
-	return <Layout>Here is my Brand ID: {brandId}</Layout>;
+	const raceId = router.query.raceId;
+	return <Layout>Here is my Brand ID: {raceId}</Layout>;
 };
 
 export default BrandDetails;

@@ -79,3 +79,6 @@ class City(models.Model):
     state = models.ForeignKey("State", related_name="cities", on_delete=models.CASCADE)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.name}, {State.StateAbbreviation(self.state.name)._name_}"

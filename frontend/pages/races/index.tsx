@@ -7,7 +7,7 @@ import BrandCard from '../../components/BrandCard';
 const Brands = () => {
 	const [loadingApiResponse, setLoadingApiResponse] = useState(true);
 	const [brands, setBrands] = useState<Brand[]>([]);
-	const url = makeUrl('/api/brand/');
+	const url = makeUrl('/api/races/');
 	const { loading, accessToken } = useAuth();
 
 	useEffect(() => {
@@ -29,10 +29,10 @@ const Brands = () => {
 	}, [accessToken]);
 	return (
 		<Layout>
-			<h1>Brands</h1>
+			<h1>Races</h1>
 			{!loadingApiResponse ? (
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-					{brands.map((data) => {
+					{brands?.map((data) => {
 						return <BrandCard key={data.id} brand={data} />;
 					})}
 				</div>

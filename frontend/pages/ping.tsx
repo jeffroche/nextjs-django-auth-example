@@ -20,7 +20,6 @@ const Ping = (): React.ReactElement => {
 			const data = await resp.json();
 			setAPIResponse(data.now);
 		} else {
-			console.log('PING RESP', resp);
 			setAPIResponse('Error during API call');
 		}
 		setAwaitingResponse(false);
