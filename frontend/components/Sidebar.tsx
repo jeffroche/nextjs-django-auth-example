@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import React, { useContext } from 'react';
-import { LoginIcon, LogoutIcon } from '@heroicons/react';
 import Toggle from '../components/theme/Toggle';
 
 import {
