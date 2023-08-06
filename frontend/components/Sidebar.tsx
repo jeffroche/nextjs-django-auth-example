@@ -19,6 +19,8 @@ import { cn } from '../lib/utils';
 import { usePathname } from 'next/navigation';
 import { ThemeContext } from './theme/ThemeContext';
 import { useClerk } from '@clerk/nextjs';
+import Image from 'next/image';
+import { Montserrat } from 'next/font/google';
 
 const upperRoutes = [
 	{
@@ -58,14 +60,7 @@ const upperRoutes = [
 	}
 ];
 
-const lowerRoutes = [
-	{
-		label: 'Help Center',
-		icon: Headphones,
-		href: '/help',
-		color: '#52525b'
-	}
-];
+const poppins = Montserrat({ weight: '600', subsets: ['latin'] });
 
 const Sidebar = () => {
 	const pathname = usePathname();
@@ -73,7 +68,18 @@ const Sidebar = () => {
 	const { signOut } = useClerk();
 	return (
 		<nav className="flex flex-col justify-between h-full px-2 border-r-2">
-			<div className="flex-shrink-0 space-y-4 px-2 ">
+			<Link
+				href="/dashboard"
+				className="flex items-center justify-center mb-10 mt-3"
+			>
+				<div className="relative h-12 w-12 mr-4">
+					<Image fill alt="Logo" src="pace-my-race-icon.svg" />
+				</div>
+				<h1 className="text-2xl font-bold text-center tracking-[0.1px]">
+					Pace My Race
+				</h1>
+			</Link>
+			<div className="flex-shrink-0 space-y-2 md:space-y-4 px-2 ">
 				{upperRoutes.map((route) => (
 					<Link
 						key={route.href}
@@ -115,7 +121,7 @@ const Sidebar = () => {
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-grow flex-col justify-end space-y-4 px-2 mb-3">
+			<div className="flex flex-grow flex-col justify-end space-y-2 md:space-y-4 px-2 mb-3">
 				<Link
 					href="/help"
 					className="text-sm group flex m-3 w-full items-center font-medium cursor-pointer transition 300 hover:text-black dark:hover:text-white rounded-lg text-zinc-400 "

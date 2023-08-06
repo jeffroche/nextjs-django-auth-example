@@ -9,6 +9,24 @@ User = get_user_model()
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "username",
+                    "first_name",
+                    "last_name",
+                    "password",
+                    "email",
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                )
+            },
+        ),
+        # Add more fields if necessary
+    )
     ordering = ("email",)
 
 

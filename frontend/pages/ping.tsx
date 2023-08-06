@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { useAuth } from '../auth';
+import { useSession } from '@clerk/nextjs';
 
 const Ping = (): React.ReactElement => {
-	const { loading, getToken, isAuthenticated } = useAuth();
+	const { session } = useSession();
 	const [awaitingResponse, setAwaitingResponse] = useState<boolean>(false);
 	const [apiResponse, setAPIResponse] = useState<string>('');
 
@@ -13,7 +13,7 @@ const Ping = (): React.ReactElement => {
 		const resp = await fetch(url, {
 			method: 'GET',
 			headers: {
-				Authorization: `Bearer ${await getToken()}`
+				Authorization: `Bearer ${await session?.getToken()}`
 			}
 		});
 		if (resp.ok) {

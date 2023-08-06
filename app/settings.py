@@ -13,6 +13,9 @@ env = environ.Env(
     LOGGING_LEVEL=(str, "INFO"),
     DEBUG=(bool, True),
     DEBUG_TOOLBAR=(bool, False),
+    CLERK_FRONTEND_API_URL=(str, None),
+    CLERK_SECRET_KEY=(str, None),
+    DEFAULT_CLERK_PASSWORD=(str, "password1234"),
 )
 IGNORE_DOT_ENV_FILE = env.bool("IGNORE_DOT_ENV_FILE", default=False)
 if not IGNORE_DOT_ENV_FILE:
@@ -41,6 +44,11 @@ if ON_SERVER:
 else:
     CORS_ORIGIN_ALLOW_ALL = True
 
+CLERK_SECRET_KEY = env("CLERK_SECRET_KEY")
+CLERK_API_URL = "https://api.clerk.dev/v1"
+CACHE_KEY = "jwks_data"
+DEFAULT_CLERK_PASSWORD = env("DEFAULT_CLERK_PASSWORD")
+CLERK_FRONTEND_API_URL = env("CLERK_FRONTEND_API_URL")
 
 # Application definition
 
@@ -207,6 +215,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 25,
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "app.middleware.JWTAuthenticationMiddleware",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ),
@@ -214,7 +223,7 @@ REST_FRAMEWORK = {
 
 # JWT Settings
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
 }
 JWT_COOKIE_NAME = env.str("JWT_COOKIE_NAME", default="refresh_token")

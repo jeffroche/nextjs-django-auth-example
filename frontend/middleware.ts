@@ -1,6 +1,5 @@
 import { authMiddleware } from '@clerk/nextjs';
 import { redirectToSignIn } from '@clerk/nextjs';
-import { NextResponse } from 'next/server';
 
 export default authMiddleware({
 	publicRoutes: ['/', '/api/webhook'],
@@ -10,9 +9,6 @@ export default authMiddleware({
 			return redirectToSignIn({ returnBackUrl: req.url });
 		}
 		// redirect them to organization selection page
-		if (auth.userId) {
-			//  This is where I should authenticate my user with the Django API.
-		}
 	}
 });
 

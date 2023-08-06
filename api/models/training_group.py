@@ -1,8 +1,7 @@
 from django.db import models
-from polymorphic.models import PolymorphicModel
 
 
-class Group(PolymorphicModel):
+class Group(models.Model):
     name = models.CharField(max_length=255, unique=True)
     members = models.ManyToManyField("User", related_name="training_groups")
     city = models.ForeignKey(

@@ -145,7 +145,7 @@ export const AuthProvider = ({
 
 	const handleNewToken = (data: TokenResponse): void => {
 		setAccessToken(data.access);
-		const expiryInt = data.access_expires * 1000;
+		const expiryInt = data.access_expires * 10000;
 		setAccessTokenExpiry(expiryInt);
 		setIsAuthenticated(true);
 		setLoading(false);

@@ -7,6 +7,7 @@ from api.views.races import RaceViewSet
 from api.views import ping, profile
 from . import jwt_views
 
+
 admin.autodiscover()
 
 router = routers.DefaultRouter()

@@ -7,7 +7,6 @@ import { Card } from '../../../components/ui/card';
 import { cn } from '../../../lib/utils';
 
 import { tools } from '../../../constants';
-import { UserButton, useUser } from '@clerk/nextjs';
 
 export default function HomePage() {
 	const router = useRouter();
@@ -16,10 +15,10 @@ export default function HomePage() {
 		<div>
 			<div className="mb-8 space-y-4">
 				<h2 className="text-2xl md:text-4xl font-bold text-center">
-					Explore the power of AI
+					Unlock Your True Potential
 				</h2>
 				<p className="text-muted-foreground font-light text-sm md:text-lg text-center">
-					Chat with the smartest AI - Experience the power of AI
+					Find the perfect pacer to your next PR.
 				</p>
 			</div>
 			<div className="px-4 md:px-20 lg:px-32 space-y-4">
