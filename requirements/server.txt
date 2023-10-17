@@ -1,6 +1,11 @@
 -r ./base.txt
 
 gunicorn==20.0.4
-psycopg2==2.8.4
+psycopg2-binary==2.8.4
 whitenoise==5.0.1
 sentry-sdk==0.14.3
+pdf2image==1.14.0
+pypdf
+pytesseract==0.3.4
+opencv-python
+pillow

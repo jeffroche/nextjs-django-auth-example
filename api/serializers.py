@@ -6,6 +6,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import models
 
+class FileUploadSerializer(serializers.Serializer):
+    file = serializers.FileField()
+    
+
 
 class User(serializers.ModelSerializer):
     class Meta:
