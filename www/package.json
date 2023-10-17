@@ -4,9 +4,9 @@
   "description": "Frontend for django app",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 4000",
-    "build": "next build",
-    "start": "next start",
+    "dev": "set SET NODE_OPTIONS=--openssl-legacy-provider && next -p 4000",
+    "build": "set SET NODE_OPTIONS=--openssl-legacy-provider && next build",
+    "start": "set SET NODE_OPTIONS=--openssl-legacy-provider &&  next start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
