@@ -16,7 +16,7 @@ const loginApi = async (username: string, password: string): Promise<void> => {
   Router.push("/me");
 };
 
-const Login: React.SFC = (): React.ReactElement => {
+const Login: React.FC = (): React.ReactElement => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
