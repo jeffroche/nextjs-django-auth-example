@@ -4,4 +4,60 @@
 
 www/node_modules
 www/.next
-__pycache__
+
+# Ignore Python byte code and virtual environment files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore system and IDE files
+*.swp
+*~
+.idea/
+.vscode/
+__pycache__/
+
+# Ignore log files
+*.log
+
+# Ignore environment-specific settings files
+.env
+
+# Ignore media and static files
+/media/
+/static/
+
+# Ignore your local development settings
+local_settings.py
+
+# Ignore Python's venv and virtual environment folders
+venv/
+.env/
+
+# Ignore package manager files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignore project-specific files (modify as needed)
+# Example: secrets.json, settings_private.py, etc.
+
+# Ignore secret keys and sensitive information
+*.secret
+*.key
+*.pem
+
+# Ignore compiled files
+*.pyc
+
+# Ignore migration files (database schema changes)
+**/migrations/
+
+# Ignore user-uploaded files (modify as needed)
+uploads/
+
+# Ignore system and backup files (e.g., macOS .DS_Store)
+.DS_Store
+
+# Ignore .vscode settings
+.vscode/

@@ -7,11 +7,12 @@ import environ
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env = environ.Env(
-    ON_SERVER=(bool, True), LOGGING_LEVEL=(str, "INFO"), DEBUG=(bool, False)
+    ON_SERVER=(bool, True), LOGGING_LEVEL=(str, "INFO"), DEBUG=(bool,True)
 )
 IGNORE_DOT_ENV_FILE = env.bool("IGNORE_DOT_ENV_FILE", default=False)
 if not IGNORE_DOT_ENV_FILE:
     # reading .env file
+    print("Reading .env file",os.path.join(BASE_DIR, ".env"))
     environ.Env.read_env(env_file=os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
@@ -22,6 +23,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
+print("check for DEBUG",DEBUG)
 ON_SERVER = env("ON_SERVER", default=True)
 
 ALLOWED_HOSTS = ["*"]
@@ -71,10 +73,11 @@ if not ON_SERVER:
     MIDDLEWARE.insert(9, "debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = [
         '127.0.0.1',
+        'localhost'
     ]
 
 ROOT_URLCONF = "api.urls"
-
+CORS_ALLOW_ALL_ORIGINS = True 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -131,6 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+print("static root for servving ",STATIC_ROOT)
 STATIC_URL = "/static/"
 
 if ON_SERVER:
