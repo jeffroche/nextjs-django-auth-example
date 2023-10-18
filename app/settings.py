@@ -99,7 +99,7 @@ WSGI_APPLICATION = "app.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
+DATABASE_URL= os.environ.get("DATABASE_URL")
 DATABASES = {
     # "default": env.db(),
     'default': {
